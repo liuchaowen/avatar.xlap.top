@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useRef, useCallback } from 'react';
+import { Loader2, Sparkles, Image as ImageIcon, User } from 'lucide-react';
+import ThemeToggle from '@/components/ThemeToggle';
 
 export default function Home() {
   const [prompt, setPrompt] = useState('');
@@ -28,9 +30,9 @@ export default function Home() {
       if (!ctx) return;
 
       // 计算裁剪区域
-      // 中心位置 (946, 990)，大小 180x180
+      // 中心位置 (948, 990)，大小 180x180
       // 左上角 = 中心 - 一半大小
-      const centerX = 946;
+      const centerX = 948;
       const centerY = 990;
       const cropX = centerX - avatarSize / 2; // 856
       const cropY = centerY - avatarSize / 2; // 900
@@ -108,12 +110,13 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-canvas flex flex-col">
       {/* 顶部导航栏 */}
-      <header className="sticky top-0 z-50 bg-white border-b border-hairline-gray">
+      <header className="sticky top-0 z-50 bg-canvas border-b border-hairline-gray">
         <div className="max-w-content mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span className="text-rausch font-bold text-xl">AI</span>
             <span className="text-ink font-semibold text-xl">微信头像</span>
           </div>
+          <ThemeToggle />
         </div>
       </header>
 
@@ -136,7 +139,7 @@ export default function Home() {
             <textarea
               id="prompt"
               className="input-field min-h-[120px]"
-              placeholder="例如：一只可爱的橘猫在樱花树下打盹，梦幻风格..."
+              placeholder="例如：一只可爱的橘猫在海棠树下打盹，清新风格..."
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
               onKeyDown={(e) => {
@@ -149,40 +152,37 @@ export default function Home() {
               <span className="text-caption-medium text-ash-gray">
                 按 Ctrl + Enter 快速生成
               </span>
-              <button
-                onClick={handleGenerate}
-                disabled={isLoading}
-                className="btn-primary"
-              >
-                {isLoading ? (
-                  <>
-                    <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
-                      <circle
-                        className="opacity-25"
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        stroke="currentColor"
-                        strokeWidth="4"
-                        fill="none"
-                      />
-                      <path
-                        className="opacity-75"
-                        fill="currentColor"
-                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                      />
-                    </svg>
-                    生成中...
-                  </>
-                ) : (
-                  <>
-                    <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-                    </svg>
-                    生成联动图
-                  </>
-                )}
-              </button>
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={() => {
+                    setPrompt('');
+                    setError(null);
+                    setBackgroundImage(null);
+                    setAvatarImage(null);
+                  }}
+                  disabled={isLoading}
+                  className="btn-secondary pl-4 pr-4 pt-2 pb-2 text-sm"
+                >
+                  清除
+                </button>
+                <button
+                  onClick={handleGenerate}
+                  disabled={isLoading}
+                  className="btn-primary pl-4 pr-4 pt-2 pb-2 text-sm"
+                >
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      生成中...
+                    </>
+                  ) : (
+                    <>
+                      <Sparkles className="h-4 w-4" />
+                      生成
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
           </div>
         </section>
@@ -190,9 +190,9 @@ export default function Home() {
         {/* 案例图片展示 - 未生成时显示 */}
         {!backgroundImage && !isLoading && (
           <section className="mb-8 max-w-4xl mx-auto">
-            <h2 className="text-subsection-heading text-ink mb-6 text-center">
+            <h3 className="text-subsection-heading text-ink mb-6 text-center">
               效果示例
-            </h2>
+            </h3>
             <div className="grid md:grid-cols-2 gap-6">
               {/* 案例1 */}
               <div className="card">
@@ -229,9 +229,9 @@ export default function Home() {
         {/* 生成结果 */}
         {(backgroundImage || isLoading) && (
           <section className="mb-8">
-            <h2 className="text-subsection-heading text-ink mb-8 text-center">
+            <h3 className="text-subsection-heading text-ink mb-8 text-center">
               生成结果
-            </h2>
+            </h3>
 
             <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
               {/* 背景图 */}
@@ -244,9 +244,7 @@ export default function Home() {
                     <div className="absolute inset-0 flex items-center justify-center bg-soft-cloud">
                       <div className="text-center">
                         <div className="animate-pulse">
-                          <svg className="h-16 w-16 mx-auto text-ash-gray" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                          </svg>
+                          <ImageIcon className="h-16 w-16 mx-auto text-ash-gray" />
                         </div>
                         <p className="mt-4 text-caption-medium text-ash-gray">AI 正在创作中...</p>
                       </div>
@@ -275,11 +273,6 @@ export default function Home() {
                   )}
                 </div>
                 {backgroundImage && (
-                  <p className="text-caption-medium text-ash-gray mt-3 text-center">
-                    尺寸：1080 × 1080 px
-                  </p>
-                )}
-                {backgroundImage && (
                   <button
                     onClick={() => downloadImage(backgroundImage, 'background.png')}
                     className="btn-secondary w-full mt-4"
@@ -298,9 +291,7 @@ export default function Home() {
                   {isLoading && !avatarImage && (
                     <div className="text-center">
                       <div className="animate-pulse">
-                        <svg className="h-16 w-16 mx-auto text-ash-gray" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                        </svg>
+                        <User className="h-16 w-16 mx-auto text-ash-gray" />
                       </div>
                       <p className="mt-4 text-caption-medium text-ash-gray">等待裁剪...</p>
                     </div>
@@ -313,11 +304,6 @@ export default function Home() {
                     />
                   )}
                 </div>
-                {avatarImage && (
-                  <p className="text-caption-medium text-ash-gray mt-3 text-center">
-                    尺寸：180 × 180 px（从背景图右下角截取）
-                  </p>
-                )}
                 {avatarImage && (
                   <button
                     onClick={() => downloadImage(avatarImage, 'avatar.png')}

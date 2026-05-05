@@ -9,10 +9,11 @@
         "lint": "next lint"
     },
     "dependencies": {
+        "lucide-react": "^1.14.0",
         "next": "14.2.3",
+        "openai": "^4.47.1",
         "react": "^18.3.1",
-        "react-dom": "^18.3.1",
-        "openai": "^4.47.1"
+        "react-dom": "^18.3.1"
     },
     "devDependencies": {
         "@types/node": "^20.12.12",

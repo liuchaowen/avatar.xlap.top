@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  darkMode: ['class', '[data-theme="dark"]'],
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -9,28 +10,28 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Airbnb 品牌色
-        rausch: "#ff385c",
-        "deep-rausch": "#e00b41",
-        "plus-magenta": "#92174d",
-        "luxe-purple": "#460479",
+        // Airbnb 品牌色 - 使用 CSS 变量支持主题切换
+        rausch: "var(--rausch)",
+        "deep-rausch": "var(--deep-rausch)",
+        "plus-magenta": "var(--plus-magenta)",
+        "luxe-purple": "var(--luxe-purple)",
         
         // 背景与表面
-        canvas: "#ffffff",
-        "soft-cloud": "#f7f7f7",
-        "hairline-gray": "#dddddd",
+        canvas: "var(--canvas)",
+        "soft-cloud": "var(--soft-cloud)",
+        "hairline-gray": "var(--hairline-gray)",
         
         // 文字色
-        ink: "#222222",
-        charcoal: "#3f3f3f",
-        "ash-gray": "#6a6a6a",
-        "mute-gray": "#929292",
-        "stone-gray": "#c1c1c1",
+        ink: "var(--ink)",
+        charcoal: "var(--charcoal)",
+        "ash-gray": "var(--ash-gray)",
+        "mute-gray": "var(--mute-gray)",
+        "stone-gray": "var(--stone-gray)",
         
         // 语义色
-        error: "#c13515",
-        "deep-error": "#b32505",
-        info: "#428bff",
+        error: "var(--error)",
+        "deep-error": "var(--deep-error)",
+        info: "var(--info)",
       },
       fontFamily: {
         sans: [
