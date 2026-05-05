@@ -332,7 +332,7 @@ export default function Home() {
       <footer className="bg-soft-cloud border-t border-hairline-gray mt-12">
         <div className="max-w-content mx-auto px-6 py-8 text-center">
           <p className="text-caption-medium text-ash-gray">
-            Powered by 百炼 AI · avatar.xlap.top
+            Powered by XLapTop
           </p>
         </div>
       </footer>
