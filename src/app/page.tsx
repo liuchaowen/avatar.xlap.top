@@ -106,7 +106,7 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-canvas">
+    <main className="min-h-screen bg-canvas flex flex-col">
       {/* 顶部导航栏 */}
       <header className="sticky top-0 z-50 bg-white border-b border-hairline-gray">
         <div className="max-w-content mx-auto px-6 py-4 flex items-center justify-between">
@@ -117,21 +117,21 @@ export default function Home() {
         </div>
       </header>
 
-      <div className="page-container">
+      <div className="flex-1">
         {/* Hero 区域 */}
-        <section className="text-center mb-12 pt-8">
+        <section className="text-center mb-12 pt-12">
           <p className="text-lg text-ash-gray max-w-2xl mx-auto mb-6">
             输入一句话创意，自动生成微信朋友圈背景图与联动头像
           </p>
           <div className="flex justify-center gap-3">
-            <span className="tag">1:1 比例</span>
-            <span className="tag">1080×1080px</span>
+            <span className="tag">规格自适应</span>
+            <span className="tag">高清输出</span>
             <span className="tag">联动头像</span>
           </div>
         </section>
 
         {/* 输入区域 */}
-        <section className="card-elevated mb-8 max-w-2xl mx-auto">
+        <section className="card-elevated mb-8 max-w-3xl mx-auto">
           <div className="flex flex-col gap-4">
             <textarea
               id="prompt"
@@ -186,6 +186,38 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        {/* 案例图片展示 - 未生成时显示 */}
+        {!backgroundImage && !isLoading && (
+          <section className="mb-8 max-w-4xl mx-auto">
+            <h2 className="text-subsection-heading text-ink mb-6 text-center">
+              效果示例
+            </h2>
+            <div className="grid md:grid-cols-2 gap-6">
+              {/* 案例1 */}
+              <div className="card">
+                <div className="image-container aspect-square relative">
+                  <img
+                    src="/image/suit1.jpg"
+                    alt="案例示例1"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </div>
+
+              {/* 案例2 */}
+              <div className="card">
+                <div className="image-container aspect-square relative">
+                  <img
+                    src="/image/suit2.jpg"
+                    alt="案例示例2"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* 错误提示 */}
         {error && (
@@ -304,14 +336,6 @@ export default function Home() {
                 <ul className="text-caption-medium text-ash-gray space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="text-ink">•</span>
-                    图A为朋友圈背景图，尺寸为 1080×1080 像素
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-ink">•</span>
-                    图B为微信头像，从背景图右下角截取（中心点 946×990）,尺寸为 180×180 像素
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-ink">•</span>
                     两张图联动使用，头像单独使用也有完整主体
                   </li>
                   <li className="flex items-start gap-2">
@@ -329,7 +353,7 @@ export default function Home() {
       </div>
 
       {/* 页脚 */}
-      <footer className="bg-soft-cloud border-t border-hairline-gray mt-12">
+      <footer className="bg-soft-cloud border-t border-hairline-gray">
         <div className="max-w-content mx-auto px-6 py-8 text-center">
           <p className="text-caption-medium text-ash-gray">
             Powered by XLapTop
