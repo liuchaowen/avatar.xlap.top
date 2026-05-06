@@ -342,7 +342,9 @@ export default function Home() {
       <footer className="bg-soft-cloud border-t border-hairline-gray">
         <div className="max-w-content mx-auto px-6 py-8 text-center">
           <p className="text-caption-medium text-ash-gray">
-            Powered by XLapTop
+            Powered by <a href="https://api.aiseo.one/register?channel=c_vazajkop" target="_blank" rel="noopener noreferrer" className="text-ink hover:underline">
+              X API
+            </a>
           </p>
         </div>
       </footer>
